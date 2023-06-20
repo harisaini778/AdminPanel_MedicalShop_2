@@ -17,6 +17,7 @@ const CartModule = () => {
               <p>Medicine Description: {item.medDes}</p>
               <p>Medicine Price: {item.medPrice}</p>
               <p>Medicine Quantity: {item.medQuant}</p>
+              <p>Total Price: {item.totalPrice}</p> {/* Add this line */}
             </li>
           ))}
         </ul>

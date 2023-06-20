@@ -13,33 +13,35 @@ function App() {
   };
 
  const addToCartHandler = (medicineData) => {
-  const existingItem = cartData.find((item) => item.medName === medicineData.medName);
+  const existingItemIndex = cartData.findIndex((item) => item.medName === medicineData.medName);
 
-  if (existingItem) {
-    const updatedItem = {
-      ...existingItem,
-      medQuant: Number(existingItem.medQuant) + Number(medicineData.medQuant), // Convert to number
-      totalPrice: existingItem.totalPrice + medicineData.medPrice * medicineData.medQuant,
-    };
-
-    setCartData((prevCartData) => {
-      const updatedCartData = prevCartData.map((item) =>
-        item.medName === existingItem.medName ? updatedItem : item
-      );
-      return updatedCartData;
+  if (existingItemIndex !== -1) {
+    const updatedCartData = cartData.map((item, index) => {
+      if (index === existingItemIndex) {
+        const updatedItem = {
+          ...item,
+          medQuant: parseInt(item.medQuant) + parseInt(medicineData.medQuant),
+          totalPrice: item.totalPrice + medicineData.medPrice * parseInt(medicineData.medQuant),
+        };
+        return updatedItem;
+      }
+      return item;
     });
+
+    setCartData(updatedCartData);
   } else {
     const newItem = {
       medName: medicineData.medName,
       medDes: medicineData.medDes,
       medPrice: medicineData.medPrice,
       medQuant: medicineData.medQuant,
-      totalPrice: medicineData.medPrice * medicineData.medQuant,
+      totalPrice: medicineData.medPrice * parseInt(medicineData.medQuant),
     };
 
     setCartData((prevCartData) => [...prevCartData, newItem]);
   }
 };
+
 
 
   return (
