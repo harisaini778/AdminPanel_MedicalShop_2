@@ -1,19 +1,12 @@
+import React from "react";
 
-const Header = () => {
+const Header = (props) => {
+  return (
+    <header>
+      <h1>Admin Panel</h1>
+      <button onClick={props.onToggleCart}>Cart</button>
+    </header>
+  );
+};
 
-    return (
-
-        <nav>
-            <div>
-                <h1>Admin Panel</h1>
-            </div>
-            <div>
-                <button>
-                    Cart Button
-                </button>
-            </div>
-        </nav>
-        
-    );
-}
 export default Header;

@@ -1,33 +1,72 @@
-import { useContext } from "react";
-import { FormContext } from "./components/FormProvider";
+import React, { useState } from "react";
 
-const UserForm = () => {
+const UserForm = ({ onAddToCart }) => {
+  const [medName, setMedName] = useState("");
+  const [medDes, setMedDes] = useState("");
+  const [medPrice, setMedPrice] = useState("");
+  const [medQuant, setMedQuant] = useState("");
 
-    const [setMedName, setMedDes, setMedPrice, setMedQuant] = useContext(FormContext);
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
+    const medicineData = {
+      medName,
+      medDes,
+      medPrice,
+      medQuant,
+    };
 
-  
-    const submitFormHandeler = (e) => {
-        e.preventDefault();
-        console.log("form submitted");
-    }
-    
+    onAddToCart(medicineData);
+
+    setMedName("");
+    setMedDes("");
+    setMedPrice("");
+    setMedQuant("");
+  };
+
+  return (
     <div>
-
-        <form onSubmit = {submitFormHandeler}>
-            <label for="name">Medicine Name : </label>
-            <input id="name" type="text" onChange={setMedName(e.target.value)}></input>
-
-            <label for="description">Medicine Description : </label>
-            <input id="description" type="text" onChange={setMedDes(e.target.value)}></input>
-
-            <label for="price">Medicine Price : </label>
-            <input id="price" type="number" onChange={setMedPrice(e.target.value)}></input>
-
-            <label for="add"> + </label>
-            <input id="add" type="number" onChange={setMedQuant(e.target.value)}></input>
-
-        </form>
+      <h2>Add Medicine</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Medicine Name:</label>
+          <input
+            type="text"
+            value={medName}
+            onChange={(event) => setMedName(event.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Medicine Description:</label>
+          <textarea
+            value={medDes}
+            onChange={(event) => setMedDes(event.target.value)}
+            required
+          ></textarea>
+        </div>
+        <div>
+          <label>Medicine Price:</label>
+          <input
+            type="number"
+            value={medPrice}
+            onChange={(event) => setMedPrice(event.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Medicine Quantity:</label>
+          <input
+            type="number"
+            value={medQuant}
+            onChange={(event) => setMedQuant(event.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Add to Cart</button>
+      </form>
     </div>
-}
+  );
+};
+
 export default UserForm;
