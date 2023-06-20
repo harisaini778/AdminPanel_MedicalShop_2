@@ -12,27 +12,23 @@ function App() {
     setCartIsShown(!cartIsShown);
   };
 
-  const addToCartHandler = (medicineData) => {
-  // Check if the item already exists in the cart
+ const addToCartHandler = (medicineData) => {
   const existingItem = cartData.find((item) => item.medName === medicineData.medName);
 
   if (existingItem) {
-    // If the item exists, update the quantity and total price
     const updatedItem = {
       ...existingItem,
-      medQuant: existingItem.medQuant + medicineData.medQuant,
+      medQuant: Number(existingItem.medQuant) + Number(medicineData.medQuant), // Convert to number
       totalPrice: existingItem.totalPrice + medicineData.medPrice * medicineData.medQuant,
     };
 
     setCartData((prevCartData) => {
-      // Replace the existing item with the updated item in the cart
       const updatedCartData = prevCartData.map((item) =>
         item.medName === existingItem.medName ? updatedItem : item
       );
       return updatedCartData;
     });
   } else {
-    // If the item doesn't exist, add it to the cart
     const newItem = {
       medName: medicineData.medName,
       medDes: medicineData.medDes,
@@ -44,6 +40,7 @@ function App() {
     setCartData((prevCartData) => [...prevCartData, newItem]);
   }
 };
+
 
   return (
     <div>
